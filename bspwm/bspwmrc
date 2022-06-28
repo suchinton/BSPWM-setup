@@ -1,0 +1,135 @@
+#! /bin/sh
+
+# source the colors. from pywal
+. "${HOME}/.cache/wal/colors.sh"
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+#bspc monitor HDMI1 -d 1 2 3 4 5 6 7 8 9
+#bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9
+
+if [[ $(xrandr --listactivemonitors | grep -v "Monitors" | cut -d" " -f4 | cut -d"+" -f2- | uniq | wc -l) == 1 ]]; then
+    bspc monitor -d 1 2 3 4 5 6 7 &
+else
+    bspc monitor HDMI1 -d 1 2 3 4 5 
+    bspc monitor eDP1 -d 6 7 8 9
+fi
+
+bspc config border_width         3
+bspc config window_gap           5
+
+sleep 2 && bspc config top_padding 35 &
+
+bspc config split_ratio          0.50
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config pointer_follows_focus true
+bspc config focus_follows_pointer true
+bspc config pointer_modifier mod4
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action2 resize_corner
+
+# 1 > terminal
+bspc rule -a Alacritty desktop='^1' follow=on focus=on
+
+# 2 > web
+bspc rule -a Brave-browser desktop='^2' follow=on focus=on
+bspc rule -a firefox desktop='^2'
+
+# 3 > files
+declare -a files=(Nemo *:DesktopEditors)
+for i in ${files[@]}; do
+   bspc rule -a $i desktop='^3' follow=on focus=on; done
+
+# 4 > code
+declare -a code=( Code Xed \
+                  GithubDesktop \
+                  *:crx_mjoklplbddabcmpepnokjaffbmgbkkgg \ ##Github webapp
+                )
+for i in ${code[@]}; do
+   bspc rule -a $i desktop='^4' follow=on focus=on; done
+
+# 5 > communication
+declare -a communication=( TelegramDesktop \
+                            *:crx_hnpfjngllnobngcgfapefoaidbinmjnm \ #Whatsapp
+                            *:crx_imgohncinckhbblnlmaedahepnnpmdma \ #duo
+                            *:crx_kmhopmchchfpfdcdjodmpfaaphdclmlj \ ##Gmail
+                            *:crx_maonlnecdeecdljpahhnnlmhbmalehlm \ ##insta
+                            *:crx_hgjagcfpplplfjdbckfjcddomdichmhd \ ##teams
+                            discord \
+                          )
+for i in ${communication[@]}; do
+   bspc rule -a $i desktop='^5' follow=on focus=on; done
+
+# 6 > Entertainment
+declare -a Entertainment=( *:Spotify \
+                           Stremio \
+                           WebApp-Netflix3884
+                         )
+for i in ${Entertainment[@]}; do
+   bspc rule -a $i desktop='^6' follow=on focus=on; done
+
+# >> Mis. Rules
+
+bspc rule -a Screenkey manage=off
+bspc rule -a Xfce4-terminal state=floating
+bspc rule -a Nitrogen state=floating
+bspc rule -a "*:Toolkit:Picture-in-Picture" \
+     state=floating sticky=on follow=off focus=on \
+     rectangle=640x360+2760+1040
+bspc rule -MusicID.py state=floating
+bspc rule -a Plank layer=above manage=on border=off
+# Border
+
+# Set the border colors.
+bspc config normal_border_color "$color15"
+bspc config active_border_color "$color2"
+bspc config focused_border_color "$color5"
+# Use the line below if you are on bspwm >= 0.9.4
+bspc config presel_feedback_color "$color1"
+# Use the line below if you are on bspwm < 0.9.4
+#bspc config presel_border_color "$color1"
+
+#bspc config focused_border_color        "#6c71c4"
+#bspc config normal_border_color         "#073642"
+#bspc config active_border_color         "#073642"
+
+#
+# Autostart
+#
+# Set display from arandr saved script
+# sh ~/.screenlayout/monitor.sh &
+
+# Bar
+~/.config/polybar/launch.sh &
+
+# Notifications
+# /usr/bin/dunst &
+pkill deadd-notificat && sleep 2 && deadd-notification-center &
+
+
+# Polkit
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# Wallpaper
+nitrogen --restore &
+wal -i "$(grep -m1 'file=' ./.config/nitrogen/bg-saved.cfg | sed 's/file=//' | xargs echo -n)" -n &
+
+# Dex
+dex -a -s /etc/xdg/autostart/:~/.config/autostart/  
+
+# Picom
+#picom --experimental-backends -b &
+picom -CGb &
+# Network Applet
+nm-applet --indicator &
+pkill firewall-applet && sleep 2 && firewall-applet &
+
+# Cursor
+xsetroot -cursor_name left_ptr &
+
+# Low battery notifier
+~/.config/bspwm/scripts/low_bat_notifier.sh
+
+
