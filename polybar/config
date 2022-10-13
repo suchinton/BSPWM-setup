@@ -65,7 +65,7 @@ font-5 = FontAwesome:pixelsize=11;B
 
 modules-left = appmenu sep More sep xwindow
 modules-center = bspwm
-modules-right = wireless-network sep bluetooth sep volume sep notification sep date sep power-set sep battery sep powermenu 
+modules-right = wireless-network sep bluetooth sep volume sep notification sep date sep power-set sep xbacklight sep battery sep powermenu 
 
 tray-position = 
 tray-padding = 2  
@@ -106,9 +106,9 @@ font-3 = JetBrainsMono Nerd Font:pixelsize=11;2
 font-4 = Noto Sans Regular: ;pixelsize = 10;3
 font-5 = FontAwesome:pixelsize=11;
 
-modules-left = appmenu sep xwindow  
+modules-left = appmenu sep More sep xwindow  
 modules-center = bspwm
-modules-right = checkupdates sep notification sep volume sep powermenu 
+modules-right = checkupdates sep Wiz_light sep notification sep volume sep powermenu 
 
 ;alsa
 tray-position = 
