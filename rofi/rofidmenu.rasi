@@ -3,7 +3,7 @@
  * Maintainer: joekamprad <joekamprad@endeavouros.com>
  *******************************************************/
 configuration { 
-    font:				"SF Pro Rounded Regular 13";
+    font:				"Dank Mono Regular 13";
     show-icons:				true;
     icon-theme:				"WhiteSur-dark";
     display-drun:			"Search";

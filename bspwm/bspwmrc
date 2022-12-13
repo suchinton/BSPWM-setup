@@ -1,5 +1,8 @@
 #! /bin/sh
 
+#libinput-gestures daemon for gesture input
+libinput-gestures-setup start &
+
 # source the colors. from pywal
 . "${HOME}/.cache/wal/colors.sh"
 
@@ -102,6 +105,7 @@ bspc config presel_feedback_color "$color1"
 # sh ~/.screenlayout/monitor.sh &
 
 # Bar
+pkill polybar &
 ~/.config/polybar/launch.sh &
 
 # Notifications
@@ -114,14 +118,14 @@ pkill deadd-notificat && sleep 2 && deadd-notification-center &
 
 # Wallpaper
 nitrogen --restore &
-wal -i "$(grep -m1 'file=' ./.config/nitrogen/bg-saved.cfg | sed 's/file=//' | xargs echo -n)" -n &
+wal -i "$(grep -m1 'file=' ~/.config/nitrogen/bg-saved.cfg | sed 's/file=//' | xargs echo -n)" -n &
 
 # Dex
 dex -a -s /etc/xdg/autostart/:~/.config/autostart/  
 
 # Picom
-#picom --experimental-backends -b &
-picom -CGb &
+picom --experimental-backends -b &
+#picom -CGb &
 # Network Applet
 nm-applet --indicator &
 pkill firewall-applet && sleep 2 && firewall-applet &
