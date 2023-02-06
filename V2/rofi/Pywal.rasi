@@ -1,0 +1,12 @@
+
+//pop dark color scheme for rofi
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+* {
+    background:     @background;
+    background-alt: @background;
+    foreground:     @background;
+    selected:       #50FA7BFF;
+    active:         #BD93F9FF;
+    urgent:         #FF5555FF;
+}

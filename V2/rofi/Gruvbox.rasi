@@ -1,0 +1,10 @@
+//pop dark color scheme for rofi
+
+* {
+    background:     #1D2021FF;
+    background-alt: #3C3836FF;
+    foreground:     #EBDBB2FF;
+    selected:       #8EC07CFF;
+    active:         #FABD2FFF;
+    urgent:         #FF5555FF;
+}

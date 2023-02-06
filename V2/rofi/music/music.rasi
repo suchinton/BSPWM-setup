@@ -1,0 +1,86 @@
+
+/*****----- Global Properties -----*****/
+@import                          "~/.config/rofi/colors.rasi"
+* {
+    font:                           "JetBrainsMono Nerd Font 10";
+    background-color:             	@background;
+    text-color:		@foreground;
+}
+configuration {
+
+  /* Highlight an entry under the mouse pointer */
+  hover-select: true;
+
+  /* Disable MousePrimary as an entry selector */
+  /* Without this setting you won't be able to set MousePrimary as an entry
+     acceptor. */
+  me-select-entry: "";
+
+  /* Use either LMB single click or RMB single click or LMB double click
+     to accept an entry */
+  me-accept-entry: [ MousePrimary, MouseSecondary, MouseDPrimary ];
+
+}
+window {
+    transparency:		"real";
+    location:                    north;
+    anchor:                      north;
+    y-offset:                    40px;
+    width:		400px;
+    border:                      3px solid;
+    border-radius:               10px;
+    border-color:                @selected;
+}
+
+prompt {
+    padding:		15px;
+    border-radius:	10px;
+    expand: false;
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+}
+
+inputbar {
+  children:		[ prompt ];
+  expand:		false;
+  border-radius:	10;
+}
+
+listview {
+    cycle:		true;
+    layout:		horizontal;
+    padding:		10;
+    dynamic:                     true;
+    spacing:                     20px;
+}
+
+mainbox { children: [ inputbar, listview ]; }
+
+element {
+  padding:		0px 10px 0px 10px;
+  border-radius:	10px;
+}
+
+element-text {
+  margin:		5px 18px 5px 18px;
+  padding:		0px 0px 0px 0px;
+  font:			"JetBrainsMono Nerd Font 23";
+  background-color:	transparent;
+  text-color:		inherit;
+}
+element selected.normal {
+    background-color:            @selected;
+    text-color:                  @background;
+}
+element selected {
+  background-color:	@foreground;
+  text-color:		@background;
+}
+element normal.normal {
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+}
+element alternate.normal {
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+}
